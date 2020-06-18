@@ -1,0 +1,12 @@
+{
+  "todos": [
+    {
+      "task": "Gettin jiggy wit it",
+      "isDone": true
+    },
+    {
+      "task": "Livin' la vida loca",
+      "isDone": true
+    }
+  ]
+}

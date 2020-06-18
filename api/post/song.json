@@ -1,0 +1,14 @@
+﻿{
+  "songs": [
+    {
+      "artist": "MC Hammer",
+      "song": "U can't touch this",
+      "released": "1990"
+    },
+    {
+      "artist": "Vanilla Ice",
+      "song": "Ice Ice Baby",
+      "released": "1989"
+    }
+  ]
+}
