@@ -1,5 +1,5 @@
 {
-  "name": "express-init",
+  "name": "mock-server",
   "version": "1.0.0",
   "author": "Minh Huynh",
   "main": "src/server.js",
