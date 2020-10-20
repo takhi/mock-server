@@ -1,0 +1,35 @@
+{
+  "withReqBody": true,
+  "mockResponses": [
+    {
+      "reqBody": {
+        "id": 1
+      },
+      "response": {
+        "title": "The Adventures of Tom Sawyer",
+        "author": "Mark Twain"
+      }
+    },
+    {
+      "reqBody": {
+        "id": 2
+      },
+      "response": {
+        "title": "Moby Dick",
+        "author": "Herman Melville"
+      }
+    },
+    {
+      "reqBody": {
+        "id": 3
+      },
+      "response": {
+        "title": "The Jungle Book",
+        "author": "Rudyard Kipling"
+      }
+    }
+  ],
+  "_default": {
+    "error": "Not found"
+  }
+}
