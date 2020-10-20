@@ -1,12 +1,36 @@
+const Log = require('../utils/loggerUtil');
+const { match } = require('../utils/searchUtil');
+
+const {
+  JSON_STRUCTURE: {
+    CONDITION,
+    ID,
+    ARRAY,
+    OUTPUT,
+    _DEFAULT
+  }
+} = require('../app.config');
 
 const apiHandler = {};
 
-apiHandler.mock = function(filePath) {
+apiHandler.mock = function (filePath) {
   const file = require(filePath);
-  return function(request, response) {
-    console.log(`${request.method} ${request.baseUrl}${request.path}`)
-    response.json(file);
-  }
+  const condition = file[CONDITION] || false;
+  const array = file[ARRAY] || [];
+  const _default = file[_DEFAULT] || '';
+  return function (request, response) {
+    Log.request(request);
+    if (condition) {
+      const matchedItem = match(request.body, array, {
+        id: ID,
+        output: OUTPUT,
+        _default,
+      });
+      response.json(matchedItem);
+    } else {
+      response.json(file);
+    }
+  };
 };
 
 module.exports = apiHandler;
