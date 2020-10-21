@@ -1,14 +1,17 @@
 const { isEqual } = require('lodash');
 
 const Search = {
-  match: function(obj, map = [], config) {
-    const { id, output, _default } = config;
-    for (let i = 0; i < map.length; i++) {
-      if (isEqual(map[i][id], obj)) {
-        return map[i][output];
+  match: function(
+      obj,
+      map = [],
+      { id, output, config, _default }
+    ) {
+      for (let i = 0; i < map.length; i++) {
+        if (isEqual(map[i][id], obj)) {
+          return [map[i][output], map[i][config]];
+        }
       }
-    }
-    return _default;
+    return [_default[output], _default[config]];
   }
 }
 

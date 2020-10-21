@@ -7,6 +7,7 @@ const {
     ID,
     ARRAY,
     OUTPUT,
+    CONFIG,
     _DEFAULT
   }
 } = require('../app.config');
@@ -21,11 +22,13 @@ apiHandler.mock = function (filePath) {
   return function (request, response) {
     Log.request(request);
     if (condition) {
-      const matchedItem = match(request.body, array, {
+      const [matchedItem, config] = match(request.body, array, {
         id: ID,
         output: OUTPUT,
+        config: CONFIG,
         _default,
       });
+      if (config.statusCode) response.status(config.statusCode);
       response.json(matchedItem);
     } else {
       response.json(file);

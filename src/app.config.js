@@ -4,6 +4,7 @@ const config = {
     ARRAY: 'mockResponses',
     ID: 'reqBody',
     OUTPUT: 'response',
+    CONFIG: 'resConfig',
     _DEFAULT: '_default'
   }
 }
