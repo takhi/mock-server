@@ -28,7 +28,7 @@ apiHandler.mock = function (filePath) {
         config: CONFIG,
         _default,
       });
-      if (config.statusCode) response.status(config.statusCode);
+      if (config && config.statusCode) response.status(config.statusCode);
       response.json(matchedItem);
     } else {
       response.json(file);
