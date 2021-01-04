@@ -1,10 +1,10 @@
-const fs = require("fs");
-const path = require("path");
-const { Router } = require("express");
+const fs = require('fs');
+const path = require('path');
+const { Router } = require('express');
 
-const apiHandler = require("../handlers/apiHandler");
+const apiHandler = require('../handlers/apiHandler');
 
-const apiDir = path.resolve(__dirname, "../../api");
+const apiDir = path.resolve(__dirname, '../../api');
 const methodList = fs.readdirSync(apiDir);
 
 function apiRoute() {
@@ -14,7 +14,14 @@ function apiRoute() {
     methodDir = path.resolve(apiDir, methodList[i]);
     jsonFiles = fs.readdirSync(methodDir);
     for (let j = 0; j < jsonFiles.length; j++) {
-      router[methodList[i]]("/" + jsonFiles[j].replace(".json", ""), apiHandler.mock(path.resolve(methodDir, jsonFiles[j])));
+      router[methodList[i]](
+        '/' +
+          jsonFiles[j].replace(
+            '.json',
+            methodList[i] === 'get' ? '/*' : ''
+          ),
+        apiHandler.mock(path.resolve(methodDir, jsonFiles[j]))
+      );
     }
   }
   return router;

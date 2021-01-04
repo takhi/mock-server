@@ -2,12 +2,12 @@ const { isEqual } = require('lodash');
 
 const Search = {
   match: function(
-      obj,
+      matchObj,
       map = [],
       { id, output, config, _default }
     ) {
       for (let i = 0; i < map.length; i++) {
-        if (isEqual(map[i][id], obj)) {
+        if (isEqual(map[i][id], matchObj)) {
           return [map[i][output], map[i][config]];
         }
       }
