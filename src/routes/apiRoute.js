@@ -1,28 +1,41 @@
-const fs = require('fs');
-const path = require('path');
-const { Router } = require('express');
+const fs = require("fs");
+const path = require("path");
+const { Router } = require("express");
 
-const apiHandler = require('../handlers/apiHandler');
+const apiHandler = require("../handlers/apiHandler");
 
-const apiDir = path.resolve(__dirname, '../../api');
+const apiDir = path.resolve(__dirname, "../../api");
 const methodList = fs.readdirSync(apiDir);
+
+function buildRoute(filePath, dirList, router, config) {
+  for (let i = 0; i < dirList.length; i++) {
+    const appendedFilePath = filePath + "/" + dirList[i].name;
+    if (dirList[i].isDirectory()) {
+      buildRoute(
+        appendedFilePath,
+        fs.readdirSync(config.methodDir + appendedFilePath, {
+          withFileTypes: true,
+        }),
+        router,
+        config
+      );
+    } else {
+      router[config.method](
+        appendedFilePath.replace(".json", config.method === "get" ? "/*" : ""),
+        apiHandler.mock(config.methodDir + appendedFilePath)
+      );
+    }
+  }
+}
 
 function apiRoute() {
   const router = Router();
-  let methodDir, jsonFiles;
   for (let i = 0; i < methodList.length; i++) {
     methodDir = path.resolve(apiDir, methodList[i]);
-    jsonFiles = fs.readdirSync(methodDir);
-    for (let j = 0; j < jsonFiles.length; j++) {
-      router[methodList[i]](
-        '/' +
-          jsonFiles[j].replace(
-            '.json',
-            methodList[i] === 'get' ? '/*' : ''
-          ),
-        apiHandler.mock(path.resolve(methodDir, jsonFiles[j]))
-      );
-    }
+    buildRoute("", fs.readdirSync(methodDir, { withFileTypes: true }), router, {
+      method: methodList[i],
+      methodDir,
+    });
   }
   return router;
 }
