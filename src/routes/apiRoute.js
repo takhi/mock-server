@@ -20,8 +20,14 @@ function buildRoute(filePath, dirList, router, config) {
         config
       );
     } else {
+      if (config.method === 'get') {
+        router[config.method](
+          appendedFilePath.replace('.json', '/*' ),
+          apiHandler.mock(config.methodDir + appendedFilePath)
+        );
+      }
       router[config.method](
-        appendedFilePath.replace('.json', config.method === 'get' ? '/*' : ''),
+        appendedFilePath.replace('.json', ''),
         apiHandler.mock(config.methodDir + appendedFilePath)
       );
     }
