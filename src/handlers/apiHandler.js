@@ -1,5 +1,6 @@
 const Log = require('../utils/loggerUtil');
 const { match } = require('../utils/searchUtil');
+const { set } = require('../utils/responseUtil');
 
 const {
   JSON_STRUCTURE: {
@@ -27,23 +28,27 @@ apiHandler.mock = function (filePath) {
         config: CONFIG,
         _default,
       });
-      if (config && config.statusCode) response.status(config.statusCode);
+      set(response, config);
       response.json(matchedItem);
     } else if (file[CONDITION.GET.PARAM]) {
+      // v1/api/ping/param
       const [matchedItem, config] = match(request.params[0], array, {
         id: ID.GET.PARAM,
         output: OUTPUT,
         config: CONFIG,
         _default,
       });
+      set(response, config);
       response.json(matchedItem);
     } else if(file[CONDITION.GET.QUERY]) {
+      // v1/api/ping?key=value
       const [matchedItem, config] = match(request.query, array, {
         id: ID.GET.QUERY,
         output: OUTPUT,
         config: CONFIG,
         _default,
       });
+      set(response, config);
       response.json(matchedItem);
     } else {
       response.json(file);
