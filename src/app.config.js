@@ -21,6 +21,7 @@ const config = {
     },
     OUTPUT: 'response',
     CONFIG: 'resConfig',
+    DELAY: 'delay',
     _DEFAULT: '_default'
   }
 }
