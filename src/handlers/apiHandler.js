@@ -30,7 +30,6 @@ apiHandler.mock = function (filePath) {
         delay: DELAY,
         _default,
       });
-      console.log(delay)
       set(response, config);
       setTimeout(() => response.json(matchedItem), delay);
     } else if (file[CONDITION.GET.PARAM]) {
