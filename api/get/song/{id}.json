@@ -1,0 +1,31 @@
+{
+  "withReqParam": true,
+  "mockResponses": [
+    {
+      "reqParam": {
+        "id": "1"
+      },
+      "response": {
+        "artist": "MC Hammer",
+        "song": "U can't touch this",
+        "released": "1990"
+      }
+    },
+    {
+      "reqParam": {
+        "id": "2"
+      },
+      "response": {
+        "artist": "Vanilla Ice",
+        "song": "Ice Ice Baby",
+        "released": "1989"
+      }
+    }
+  ],
+  "_default": {
+    "response": null,
+    "resConfig": {
+      "statusCode": 404
+    }
+  }
+}

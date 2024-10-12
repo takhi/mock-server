@@ -33,8 +33,8 @@ apiHandler.mock = function (filePath) {
       set(response, config);
       setTimeout(() => response.json(matchedItem), delay);
     } else if (file[CONDITION.GET.PARAM]) {
-      // v1/api/ping/param
-      const [matchedItem, config, delay] = match(request.params[0], array, {
+      // v1/api/ping/{param}
+      const [matchedItem, config, delay] = match(request.params, array, {
         id: ID.GET.PARAM,
         output: OUTPUT,
         config: CONFIG,

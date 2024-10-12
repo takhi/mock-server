@@ -6,8 +6,10 @@ const apiHandler = require('../handlers/apiHandler');
 
 const apiDir = path.resolve(__dirname, '../../api');
 const methodList = fs.readdirSync(apiDir);
+const paramsRegExp = /\/{([a-z]+)}/g;
 
 function buildRoute(filePath, dirList, router, config) {
+  let path;
   for (let i = 0; i < dirList.length; i++) {
     const appendedFilePath = filePath + '/' + dirList[i].name;
     if (dirList[i].isDirectory()) {
@@ -20,14 +22,16 @@ function buildRoute(filePath, dirList, router, config) {
         config
       );
     } else {
-      if (config.method === 'get') {
+      const isParamsUrl = !!appendedFilePath.match(paramsRegExp);
+      path = appendedFilePath.replaceAll(paramsRegExp, "/:$1");
+      if (config.method === 'get' && !isParamsUrl) {
         router[config.method](
-          appendedFilePath.replace('.json', '/*' ),
+          path.replace('.json', '/*'),
           apiHandler.mock(config.methodDir + appendedFilePath)
         );
       }
       router[config.method](
-        appendedFilePath.replace('.json', ''),
+        path.replace('.json', ''),
         apiHandler.mock(config.methodDir + appendedFilePath)
       );
     }
