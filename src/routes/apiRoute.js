@@ -23,7 +23,7 @@ function buildRoute(filePath, dirList, router, config) {
       );
     } else {
       const isParamsUrl = !!appendedFilePath.match(paramsRegExp);
-      path = appendedFilePath.replaceAll(paramsRegExp, "/:$1");
+      path = appendedFilePath.replace(paramsRegExp, "/:$1");
       if (config.method === 'get' && !isParamsUrl) {
         router[config.method](
           path.replace('.json', '/*'),
