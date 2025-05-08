@@ -4,9 +4,11 @@ const { Router } = require('express');
 
 const apiHandler = require('../handlers/apiHandler');
 
-const apiDir = path.resolve(__dirname, '../../api');
-const methodList = fs.readdirSync(apiDir);
+const methodFilter = /get|post|patch|delete/i;
 const paramsRegExp = /\/{([a-z]+)}/g;
+
+const apiDir = path.resolve(__dirname, '../../api');
+const methodList = fs.readdirSync(apiDir).filter(m => methodFilter.test(m));
 
 function buildRoute(filePath, dirList, router, config) {
   let path;
